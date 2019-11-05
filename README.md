@@ -20,10 +20,10 @@ All other pieces of this project were provided by Udacity.
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app.
+2. Run the following command in the app's directory to run your web app. (`cd app/` from Udacity_DisasterPipeline directory)
     `python run.py`
 
-3. Go to http://0.0.0.0:3001/
+3. Go to http://0.0.0.0:3001/ (For a Windows machine, *http://localhost:3001* works)
 
 
 ### Presentation improvements to explore:
