@@ -10,7 +10,6 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
-#from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
@@ -48,13 +47,20 @@ def tokenize(text):
 
 
 def build_model():
-    """ Builds a multioutput classifier with the pipeline module """
+    """ Builds a multioutput classifier with the GridSearch CV and the pipeline module """
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize, max_df=0.8, min_df=0.0)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier(min_samples_split=2)))
     ])
-    return pipeline
+    parameters = {
+        'vect__max_df': [0.8, 1.0],
+        'vect__min_df': [0.0, 0.2],
+        'clf__estimator__min_samples_split': [2, 5, 10],
+    }
+
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
